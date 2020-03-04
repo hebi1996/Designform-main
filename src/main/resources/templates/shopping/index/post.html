@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="shopping/index/include_shopping::header">
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			outline: 0 none;
+		}
+		.add-plus-input{
+			white-space: nowrap;
+		}
+		.add-plus-input .btn,
+		.add-plus-input .num{
+			height: 20px;
+			line-height: 20px;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.add-plus-input .num{
+			border-top: 1px solid #999;
+			border-bottom: 1px solid #999;
+			border-left: 0;
+			border-right: 0;
+			width: 50px
+		}
+		.add-plus-input .btn{
+			border: 1px solid #999;
+			background-color: #F4F4F4;
+			display: inline-block;
+			text-decoration: none;
+			width: 20px;
+		}
+			</style>
+</head>
+<body>
+	<nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
+	<!-- Page Header -->
+	<header class="intro-header"
+		style="background-image: url('/img/blog/post-bg.jpg')">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+					<div class="post-heading">
+						<h1 th:text="${user.name}"></h1>
+						<span class="meta"><a href="#"
+							th:text="${user.name}"></a>&nbsp;&nbsp;的小店<a href="#"
+							th:text="${gtmModified}"></a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Post Content -->
+	<article>
+		<div class="container">
+			<div class="col-sm-11">
+				<div id="content" class="summernote">
+				</div>
+			</div>
+
+		</div>
+	</article>
+	<hr>
+	<div th:include="shopping/index/include_shopping::footer"></div>
+	<script type="text/javascript" th:inline="javascript">
+		$().ready(function() {
+			$('.summernote').summernote({
+				lang : 'zh-CN'
+			});
+			var content = /*[[${goods}]]*/
+			var htmlText = "";
+			for (i = 0; i < content.length; i++) {
+				htmlText += '<div class="post-preview">';
+				htmlText += '<h2 class="post-title">';
+				htmlText += '<img alt="image" class="img-circle" height="80" width="80" src="'+content[i].imagesUrl+'"/>'
+				htmlText += '</h2>';
+				htmlText += '</a>';
+				htmlText += '<p class="post-meta"><a href="#">'+ content[i].name+ '</a> &nbsp;&nbsp; ￥ '+ content[i].price + '元</p>';
+				htmlText += '</div>';
+				htmlText += '<div class="add-plus-input">';
+				htmlText += '<a href="javascript:;" class="add btn">+</a><input type="text" class="num" value="0" /><a href="javascript:;" class="plus btn">-</a>';
+				htmlText += '<button type="button" class="buttonClick">加入购物车</button>';
+				htmlText += '</div>';
+				htmlText += '<hr>';
+			}
+			$('#content').code(htmlText);
+			$('.summernote').destroy();
+			$(".add-plus-input .add").click(function() {
+				var $num = $(this).next(".num");
+				var number = $num.attr("value");
+				$num.attr("value",parseInt(number) + 1);
+			});
+			$(".add-plus-input .plus").click(function() {
+				var $num = $(this).prev(".num");
+				var number = $num.attr("value");
+				$num.attr("value",parseInt(number) - 1);
+			});
+			$(".buttonClick").click(function() {
+				alert($(":text").val());
+			});
+		});
+	</script>
+</body>
+</html>

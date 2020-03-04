@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head th:include="shopping/index/include_shopping::header"></head>
+<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.left {
+			width: 100%;
+			height: 300px;
+			float: left;
+			margin-left: 10px;
+			margin-top: 5px;
+		}
+		.pic {
+			width: 100px;
+		}
+		.money {
+			color: red;
+		}
+
+		button {
+			width: 20px;
+		}
+
+		.buy-dish {
+			width: 30px;
+			text-align: center;
+			color: white;
+			display: inline-block;
+			background: #FF0000;
+			font-size: 20px;
+			line-height: 20px;
+			margin-left: 75px;
+			cursor: pointer;
+		}
+
+		.buy-dish:hover {
+			background: gray;
+		}
+	</style>
+<body>
+<nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
+<header class="intro-header"
+		style="background-image: url('/img/blog/home-bg.jpg')">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="site-heading">
+					<h1><p th:text ="${loginUser.name}"></p></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="left" th:each="goods : ${goodsList}">
+	<span class="buy-id" th:text="${goods.id}"></span>
+	<img th:src="${goods.imagesUrl}" width="200" height="200"><span class="pic"></span>
+	<span class="dish-name" th:text="${goods.name}"></span>
+	<span class="dish-money" th:text="${goods.price}"></span>
+	<span class="buy-dish">+</span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	class Cart {
+		constructor() {
+		}
+		Addcart(){
+		    let oBuyId = document.getElementsByClassName("buy-id");
+			let oBuyDish = document.getElementsByClassName("buy-dish");
+			let oDishName = document.getElementsByClassName("dish-name");
+			let oDishMoney = document.getElementsByClassName("dish-money");
+			let that = this;
+			for (let i = 0; i < oBuyDish.length; i++) {
+				oBuyDish[i].onclick = function(evt) {
+					let e = evt || event;
+					let target = e.target || e.srcElement;
+					if(target.className=="buy-dish"){
+                        let goodsId = Number(oBuyId[i].innerHTML)
+                        $.ajax({
+							type: "POST",
+							url: "save/" + goodsId,
+							dataType: "JSON",
+							success: function(result) {alert(result.msg)}
+						  });
+					}
+				}
+			}
+		}
+	}
+	let c = new Cart();
+	c.Addcart();
+</script>
+<script src="/js/jquery.min.js"></script>

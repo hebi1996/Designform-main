@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head th:include="shopping/index/include_shopping::header"></head>
+<body>
+<nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
+<header class="intro-header"
+        style="background-image: url('/img/blog/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1><p th:text ="${loginUser.name}"></p></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<table border="1" style="width: 100%;">
+    <tr  th:each="cert : ${list}">
+        <td><img th:src="${cert.imageUrl}" width="200" height="200" /></td>
+        <td th:text="${cert.goodsName}">id</td>
+        <td th:text="${cert.number}">id</td>
+        <td th:text="${cert.price}">id</td>
+    </tr>
+</table>
+<button type="button" class="btn">支付</button>
+</body>
+</html>
+<script type="text/javascript">
+    class Pay {
+		constructor() {
+		}
+		Pay(){
+		    let btn = document.getElementsByClassName("btn");
+			let that = this;
+			for (let i = 0; i < btn.length; i++) {
+				btn[i].onclick = function(evt) {
+					let e = evt || event;
+					let target = e.target || e.srcElement;
+					if(target.className=="btn"){
+					     $.ajax({
+							type: "POST",
+							url: "cert/pay",
+							dataType: "JSON",
+							success: function(result) {alert(result.msg)}
+						  });
+					}
+				}
+			}
+		}
+	}
+	let c = new Pay();
+	c.Pay();
+</script>
+<script src="/js/jquery.min.js"></script>
