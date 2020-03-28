@@ -3,7 +3,6 @@ package com.design.system.controller;
 import com.design.common.annotation.Log;
 import com.design.common.config.Constant;
 import com.design.common.controller.BaseController;
-import com.design.common.service.DictService;
 import com.design.common.utils.MD5Utils;
 import com.design.common.utils.PageUtils;
 import com.design.common.utils.Query;
@@ -33,8 +32,6 @@ public class UserController extends BaseController {
 	UserService userService;
 	@Autowired
 	RoleService roleService;
-	@Autowired
-	DictService dictService;
 	@RequiresPermissions("sys:user:user")
 	@GetMapping("")
 	String user(Model model) {
@@ -204,8 +201,6 @@ public class UserController extends BaseController {
 	String personal(Model model) {
 		UserDO userDO  = userService.get(getUserId());
 		model.addAttribute("user",userDO);
-		model.addAttribute("hobbyList",dictService.getHobbyList(userDO));
-		model.addAttribute("sexList",dictService.getSexList());
 		return prefix + "/personal";
 	}
 	@ResponseBody

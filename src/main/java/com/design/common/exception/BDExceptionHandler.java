@@ -1,8 +1,6 @@
 package com.design.common.exception;
 
 import com.design.common.config.Constant;
-import com.design.common.domain.LogDO;
-import com.design.common.service.LogService;
 import com.design.common.utils.HttpServletUtils;
 import com.design.common.utils.R;
 import com.design.common.utils.ShiroUtils;
@@ -24,32 +22,6 @@ import java.util.Date;
 @RestControllerAdvice
 public class BDExceptionHandler {
     private Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    LogService logService;
-//
-//    /**
-//     * 自定义异常
-//     */
-//    @ExceptionHandler(BDException.class)
-//    public R handleBDException(BDException e) {
-//        logger.error(e.getMessage(), e);
-//        R r = new R();
-//        r.put("code", e.getCode());
-//        r.put("msg", e.getMessage());
-//        return r;
-//    }
-//
-//    @ExceptionHandler(DuplicateKeyException.class)
-//    public R handleDuplicateKeyException(DuplicateKeyException e) {
-//        logger.error(e.getMessage(), e);
-//        return R.error("数据库中已存在该记录");
-//    }
-//
-//    @ExceptionHandler(org.springframework.web.servlet.NoHandlerFoundException.class)
-//    public R noHandlerFoundException(org.springframework.web.servlet.NoHandlerFoundException e) {
-//        logger.error(e.getMessage(), e);
-//        return R.error(404, "没找找到页面");
-//    }
 
     @ExceptionHandler(AuthorizationException.class)
     public Object handleAuthorizationException(AuthorizationException e, HttpServletRequest request) {
@@ -63,17 +35,7 @@ public class BDExceptionHandler {
 
     @ExceptionHandler({Exception.class})
     public Object handleException(Exception e, HttpServletRequest request) {
-        LogDO logDO = new LogDO();
-        logDO.setGmtCreate(new Date());
-        logDO.setOperation(Constant.LOG_ERROR);
-        logDO.setMethod(request.getRequestURL().toString());
-        logDO.setParams(e.toString());
         UserDO current = ShiroUtils.getUser();
-        if(null!=current){
-            logDO.setUserId(current.getUserId());
-            logDO.setUsername(current.getUsername());
-        }
-        logService.save(logDO);
         logger.error(e.getMessage(), e);
         if (HttpServletUtils.jsAjax(request)) {
             return R.error(500, "服务器错误，请联系管理员");
