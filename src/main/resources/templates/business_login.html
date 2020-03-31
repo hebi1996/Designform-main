@@ -1,64 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>极宅-后台管理系统</title>
+    <meta name="keywords" content="BootDo管理系统">
+    <meta name="description" content="BootDo管理系统">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html"/>
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+
 </head>
-<style type="text/css">
-    .lg{
-    position: absolute;top: 50%;right: 50%;z-index: 99999999 !important;
-    }
-    input {
-    width: 240px;
-    padding: 0 25px;
-    height: 48px;
-    border: 1px solid #f2f2f2;
-    background: #f6f6f6;
-    color: #202124;
-    font-size: 14px;
-    line-height: 48px;
-    border-radius: 25px;
-}
-input:focus {
-    outline: none;
-    border-color: #2ca63b;
-    background-color: #fff;
- }
-input::selection{
-    background:transparent;
-    background-color: #fff;
-}
-input::-moz-selection{
-    background:transparent;
-    background-color: #fff;
-}
-input::-webkit-input-placeholder { /* WebKit browsers */
-    color: #bababa;
-}
-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: #bababa;
-}
-input::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: #bababa;
-}
-input:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color: #bababa;
-}
-</style>
-<body>
-    <div class="lg">
-        <p th:text="${errorMessage}"></p>
-        <form action="/business/login" method="post">
-            <h3 class="text-center">Login in</h3>
-            <input type="hidden" name="redirectUrl" th:value="${redirect_url}"/>
-            <input type="text" name="username" class="form-control uname" value=""/>
-            <input type="password" name="password" class="form-control pword m-b" value=""/>
-            <input type="submit" value="登录" style="width:150px;">
-        </form>
+
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-5">
+            <form id="signupForm">
+                <h3 class="text-center">Login in</h3>
+                <input type="hidden" name="redirectUrl" class="form-control uname" th:value="${redirect_url}"/>
+                <input type="text" name="username" class="form-control uname" placeholder="请输入账号"/>
+                <input type="password" name="password" class="form-control pword m-b" placeholder="请输入密码"/>
+                <a id="login" class="btn btn-login btn-block">Login</a>
+            </form>
+        </div>
     </div>
+    <div class="signup-footer">
+        <div class="pull-left">&copy; 2017 All Rights Reserved. 何碧
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{
+    /}]] ; </script>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
+
+<!-- 自定义js -->
+<script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
+
+<!-- jQuery Validation plugin javascript-->
+<script src="/js/ajax-util.js"></script>
+<script src="/js/plugins/validate/jquery.validate.min.js"
+        th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
+<script src="/js/plugins/validate/messages_zh.min.js" th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
+<script src="/js/plugins/layer/layer.min.js" th:src="@{/js/plugins/layer/layer.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#login").on('click', function () {
+            login();
+        });
+        $("body").keydown(keyDownLogon);
+    });
+    function login() {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:1234/business/login",
+            data: $('#signupForm').serialize(),
+            success: function (r) {
+                if(r.code == 0) {
+                    sessionStorage.setItem("username", r.result.username);
+                    parent.location.href = 'http://localhost:1234' + r.result.redirectUrl;
+                }else{
+                    alert(r.message);
+                }
+
+            },
+        });
+    }
+
+    function keyDownLogon() {
+        if (event.keyCode == "13") {
+            $("#login").trigger('click');
+        }
+    }
+</script>
 </body>
-<script src="js/jquery.min.js"></script>
-<script src="js/openTab.js"></script>
 </html>
