@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequestMapping("/sys/user")
 @Controller
@@ -78,6 +79,7 @@ public class UserController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
+		user.setStatus(Objects.equals(null, user.getStatus()) ? 0 : user.getStatus());
 		if (userService.save(user) > 0) {
 			return R.ok();
 		}

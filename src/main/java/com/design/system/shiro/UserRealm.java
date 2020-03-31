@@ -16,11 +16,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class UserRealm extends AuthorizingRealm {
-/*	@Autowired
-	UserDao userMapper;
-	@Autowired
-	MenuService menuService;*/
-
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
 		Long userId = ShiroUtils.getUserId();

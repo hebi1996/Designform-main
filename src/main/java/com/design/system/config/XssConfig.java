@@ -1,7 +1,7 @@
 package com.design.system.config;
 
 import com.design.system.filter.XssFilter;
-import com.google.common.collect.Maps;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ public class XssConfig{
 		filterRegistrationBean.setOrder(1);
 		filterRegistrationBean.setEnabled(false);
 		filterRegistrationBean.addUrlPatterns("/*");
-		Map<String, String> initParameters = Maps.newHashMap();
+		Map<String, String> initParameters = new HashedMap();
 		initParameters.put("excludes", "/favicon.ico,/img/*,/js/*,/css/*");
 		initParameters.put("isIncludeRichText", "true");
 		filterRegistrationBean.setInitParameters(initParameters);
