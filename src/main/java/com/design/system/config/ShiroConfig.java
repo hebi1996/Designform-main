@@ -81,6 +81,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/business/login", "anon");
         filterChainDefinitionMap.put("/business/register", "anon");
         filterChainDefinitionMap.put("/business/businessLogin", "anon");
+        filterChainDefinitionMap.put("/business/businessLogout", "anon");
         filterChainDefinitionMap.put("/business/businessRegister", "anon");
         filterChainDefinitionMap.put("/shopping", "anon");
         filterChainDefinitionMap.put("/shopping/open/**", "anon");

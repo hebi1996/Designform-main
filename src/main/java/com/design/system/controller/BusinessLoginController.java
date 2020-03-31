@@ -77,4 +77,10 @@ public class BusinessLoginController extends BaseController{
         }
         return JsonResult.error();
     }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "business_login";
+    }
 }

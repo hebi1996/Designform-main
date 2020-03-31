@@ -94,6 +94,7 @@
 				<li><a href="/">美食</a></li>
 				<li><a href="/sys/cert">购物车</a></li>
 				<li th:if="${session.userName}"><a><b th:text="${session.userName}"></b></a></li>
+				<li th:if="${session.userName}"><a href="/business/businessLogout">退出</a></li>
 				<li th:unless="${session.userName}"><a href="/business/businessLogin">登录</a></li>
 				<li th:unless="${session.userName}"><a href="/business/businessRegister">注册</a></li>
 			</ul>

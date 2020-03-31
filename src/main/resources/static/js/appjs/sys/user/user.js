@@ -48,7 +48,7 @@ function load() {
 					},
 					{
                         field : 'type',
-                        title : '状态',
+                        title : '用户类型',
                         align : 'center',
                         formatter : function(value, row, index) {
                             if (value == '1') {
@@ -67,21 +67,21 @@ function load() {
 						title : '用户名'
 					},
 					{
-						field : 'email',
-						title : '邮箱'
+						field : 'mobile',
+						title : '联系电话'
 					},
-                        {
-                            field : 'status',
-                            title : '状态',
-                            align : 'center',
-                            formatter : function(value, row, index) {
-                                if (value == '0') {
-                                    return '<span class="label label-danger">禁用</span>';
-                                } else if (value == '1') {
-                                    return '<span class="label label-primary">正常</span>';
-                                }
+                    {
+                        field : 'status',
+                        title : '状态',
+                        align : 'center',
+                        formatter : function(value, row, index) {
+                            if (value == '0') {
+                                return '<span class="label label-danger">禁用</span>';
+                            } else if (value == '1') {
+                                return '<span class="label label-primary">正常</span>';
                             }
-                        },
+                        }
+                    },
 					{
 						title : '操作',
 						field : 'id',
