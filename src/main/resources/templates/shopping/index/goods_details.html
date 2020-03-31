@@ -2,64 +2,47 @@
 <html>
 <head th:include="shopping/index/include_shopping::header"></head>
 <style type="text/css">
-		* {
-			padding: 0;
-			margin: 0;
-		}
-		.left {
-			width: 100%;
-			height: 300px;
-			float: left;
-			margin-left: 10px;
-			margin-top: 5px;
-		}
-		.pic {
-			width: 100px;
-		}
-		.money {
-			color: red;
-		}
-
-		button {
-			width: 20px;
-		}
-
-		.buy-dish {
-			width: 30px;
-			text-align: center;
-			color: white;
-			display: inline-block;
-			background: #FF0000;
-			font-size: 20px;
-			line-height: 20px;
-			margin-left: 75px;
-			cursor: pointer;
-		}
-
-		.buy-dish:hover {
-			background: gray;
-		}
+	#container{
+		background:red;
+	}
+	.goods{
+		padding:50px;
+	}
+	.pic {
+		display:block;
+		width:100%;
+		boder: 1px solid silver;
+	}
+	.dish-money {
+		color: blue;
+	}
+	.buy-dish {
+		text-align: center;
+		color: white;
+		display: inline-block;
+		background: #FF0000;
+		font-size: 20px;
+		line-height: 20px;
+		cursor: pointer;
+		padding:10px;
+	}
+	.buy-dish:hover {
+		background: gray;
+	}
+	.dish-name{
+		front-size:20px;
+	}
 	</style>
 <body>
 <nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
-<header class="intro-header"
-		style="background-image: url('/img/blog/home-bg.jpg')">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div class="site-heading">
-					<h1><p th:text ="${loginUser.name}"></p></h1>
-				</div>
-			</div>
-		</div>
+<div class="container" id="container">
+	<div class="goods" th:each="goods : ${goodsList}">
+		<input class="buy-id" type="hidden" th:value="${goods.id}" />
+		<img th:src="${goods.imagesUrl}" width="200" height="200"><span class="pic"></span>
+		<span class="dish-name" th:text="${goods.name}"></span>
+		<span class="dish-money" th:text="${goods.price}"></span>
+		<span class="buy-dish">加入购物车</span>
 	</div>
-</header>
-<div class="left" th:each="goods : ${goodsList}">
-	<span class="buy-id" th:text="${goods.id}"></span>
-	<img th:src="${goods.imagesUrl}" width="200" height="200"><span class="pic"></span>
-	<span class="dish-name" th:text="${goods.name}"></span>
-	<span class="dish-money" th:text="${goods.price}"></span>
-	<span class="buy-dish">+</span>
 </div>
 </body>
 </html>

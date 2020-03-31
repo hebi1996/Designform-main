@@ -25,19 +25,17 @@
 
 <body class="signin">
 <div class="signinpanel">
-    <div class="row">
-        <div class="col-sm-5">
-            <form id="signupForm">
-                <h3 class="text-center">Login in</h3>
-                <input type="hidden" name="redirectUrl" class="form-control uname" th:value="${redirect_url}"/>
-                <input type="text" name="username" class="form-control uname" placeholder="请输入账号"/>
-                <input type="password" name="password" class="form-control pword m-b" placeholder="请输入密码"/>
-                <a id="login" class="btn btn-login btn-block">Login</a>
-            </form>
-        </div>
+    <div class="col-sm-8">
+        <form id="signupForm">
+            <h3 class="text-center">登录</h3>
+            <input type="hidden" name="redirectUrl" class="form-control uname" th:value="${redirect_url}"/>
+            <input type="text" name="username" class="form-control uname" placeholder="请输入账号"/>
+            <input type="password" name="password" class="form-control pword m-b" placeholder="请输入密码"/>
+            <a id="login" class="btn btn-login btn-block">去登录</a>
+        </form>
     </div>
-    <div class="signup-footer">
-        <div class="pull-left">&copy; 2017 All Rights Reserved. 何碧
+    <div class="signup-footer" style="position:absolute;bottom:0;">
+        <div class="pull-left">&copy; 2019 何碧
         </div>
     </div>
 </div>

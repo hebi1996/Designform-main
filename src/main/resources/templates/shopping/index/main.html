@@ -1,29 +1,16 @@
 <!DOCTYPE html>
 <html>
 <meta charset="utf-8">
+<style>
+	.shopping{
+		background: silver;
+		padding: 100px;
+	}
+</style>
 <head th:include="shopping/index/include_shopping::header"></head>
 <body>
 	<nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
-	<header class="intro-header"
-		style="background-image: url('/img/blog/home-bg.jpg')">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<div class="site-heading">
-						<h1>美食</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-
-	<!-- Main Content -->
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div id="incomeNum"></div>
-			</div>
-		</div>
+	<div class="container" id="container">
 	</div>
 	</body>
 	<div th:include="shopping/index/include_shopping::footer"></div>
@@ -48,11 +35,11 @@
 						total = data.total;
 						var htmlText = "";
 						for (i = 0; i < rows.length; i++) {
-							htmlText += '<div class="post-preview">';
+							htmlText += '<div class="shopping">';
 							htmlText += '<a href="/shopping/open/post/' + rows[i].userId + '">';
 							htmlText += '<img alt="image" height="200" width="200" src="'+rows[i].picUrl+'"/>'
 							htmlText += '<h3 class="post-title">';
-							htmlText += rows[i].name + '的小店';
+							htmlText += rows[i].name;
 							htmlText += '</h3>';
 							htmlText += '</a>';
 							htmlText += '<p class="post-meta">地址：<a href="#">'
@@ -62,7 +49,7 @@
 							htmlText += '</div>';
 							htmlText += '<hr>';
 						}
-						$("#incomeNum").append(htmlText);
+						$("#container").append(htmlText);
 					}
 				});
 		}

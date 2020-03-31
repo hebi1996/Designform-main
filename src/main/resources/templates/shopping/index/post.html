@@ -32,36 +32,15 @@
 			text-decoration: none;
 			width: 20px;
 		}
-			</style>
+		.goods{
+			padding:100px;
+		}
+</style>
 </head>
 <body>
 	<nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
-	<!-- Page Header -->
-	<header class="intro-header"
-		style="background-image: url('/img/blog/post-bg.jpg')">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<div class="post-heading">
-						<h1 th:text="${user.name}"></h1>
-						<span class="meta"><a href="#"
-							th:text="${user.name}"></a>&nbsp;&nbsp;的小店<a href="#"
-							th:text="${gtmModified}"></a>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-
-	<!-- Post Content -->
 	<article>
-		<div class="container">
-			<div class="col-sm-11">
-				<div id="content" class="summernote">
-				</div>
-			</div>
-
+		<div class="container" id="container">
 		</div>
 	</article>
 	<hr>
@@ -74,7 +53,7 @@
 			var content = /*[[${goods}]]*/
 			var htmlText = "";
 			for (i = 0; i < content.length; i++) {
-				htmlText += '<div class="post-preview">';
+				htmlText += '<div class="goods">';
 				htmlText += '<h2 class="post-title">';
 				htmlText += '<img alt="image" class="img-circle" height="80" width="80" src="'+content[i].imagesUrl+'"/>'
 				htmlText += '</h2>';
@@ -87,7 +66,7 @@
 				htmlText += '</div>';
 				htmlText += '<hr>';
 			}
-			$('#content').code(htmlText);
+			$('#container').code(htmlText);
 			$('.summernote').destroy();
 			$(".add-plus-input .add").click(function() {
 				var $num = $(this).next(".num");
