@@ -10,10 +10,6 @@ import java.util.Map;
 
 @Configuration
 public class XssConfig{
-
-	/**
-	 * xss过滤拦截器
-	 */
 	@Bean
 	public FilterRegistrationBean xssFilterRegistrationBean() {
 		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();

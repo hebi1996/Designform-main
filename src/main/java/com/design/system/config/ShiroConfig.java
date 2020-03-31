@@ -25,11 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
-//import org.apache.shiro.cache.CacheManager;
-
-/**
- * @author bootdo 1992lcg@163.com
- */
 @Configuration
 public class ShiroConfig {
     @Value("${spring.redis.host}")
