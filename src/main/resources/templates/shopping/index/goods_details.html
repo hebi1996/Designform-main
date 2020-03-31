@@ -61,7 +61,8 @@
 					let e = evt || event;
 					let target = e.target || e.srcElement;
 					if(target.className=="buy-dish"){
-                        let goodsId = Number(oBuyId[i].innerHTML)
+                        let goodsId = Number(oBuyId[i].value)
+                        alert(goodsId)
                         $.ajax({
 							type: "POST",
 							url: "save/" + goodsId,

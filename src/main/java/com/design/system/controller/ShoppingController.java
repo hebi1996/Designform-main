@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RequestMapping("/shopping")
 @Controller
@@ -73,6 +74,7 @@ public class ShoppingController extends BaseController{
     @PostMapping("/open/post/save/{goodsId}")
     @ResponseBody
     public R save(@PathVariable("goodsId") Long goodsId) {
+        if(Objects.equals(null, goodsId)) return R.error("商品不能为空");
         ShopingCertDO shopingCertDO = shopingCertDao.selectByGoodsIdAndUserIdCreate(goodsId, getUserId());
         if (null == shopingCertDO) {
             shopingCertDO = new ShopingCertDO();
