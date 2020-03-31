@@ -69,28 +69,10 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public int save(UserDO user) {
-        return userMapper.save(user);
-    }
+    public int save(UserDO user) { return userMapper.save(user);}
 
     @Override
-    public int update(UserDO user) {
-        int r = userMapper.update(user);
-        Long userId = user.getUserId();
-        List<Long> roles = user.getRoleIds();
-        userRoleMapper.removeByUserId(userId);
-        List<UserRoleDO> list = new ArrayList<>();
-        for (Long roleId : roles) {
-            UserRoleDO ur = new UserRoleDO();
-            ur.setUserId(userId);
-            ur.setRoleId(roleId);
-            list.add(ur);
-        }
-        if (list.size() > 0) {
-            userRoleMapper.batchSave(list);
-        }
-        return r;
-    }
+    public int update(UserDO user) { return userMapper.update(user);}
 
     @Override
     public int remove(Long userId) {

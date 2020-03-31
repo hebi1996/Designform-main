@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RequestMapping("/business")
 @Controller
@@ -29,7 +30,7 @@ public class BusinessLoginController extends BaseController{
 
     @PostMapping("/login")
     @ResponseBody
-    public JsonResult login(@RequestParam String redirectUrl, @RequestParam String username, @RequestParam String password) {
+    public JsonResult login(HttpServletRequest request,@RequestParam String redirectUrl, @RequestParam String username, @RequestParam String password) {
         if (StringUtils.isBlank(username)
                 || StringUtils.isBlank(password)) return JsonResult.buildResp(ResultCode.ACCOUNT_PWD_ERROR);
         password = MD5Utils.encrypt(username, password);
@@ -37,6 +38,8 @@ public class BusinessLoginController extends BaseController{
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
+            HttpSession session=request.getSession();//获取session并将userName存入session对象
+            session.setAttribute("userName", username);
             return JsonResult.buildResp(new LoginVo(username, password, StringUtils.isBlank(redirectUrl) ? "/" : redirectUrl));
         } catch (AuthenticationException e) {
             e.printStackTrace();
@@ -47,14 +50,16 @@ public class BusinessLoginController extends BaseController{
     UserService userService;
     @PostMapping("/register")
     @ResponseBody
-    public JsonResult register(@RequestParam String username, @RequestParam String password, @RequestParam String name, @RequestParam String mobile, @RequestParam String liveAddress) {
+    public JsonResult register(
+            @RequestParam String username, @RequestParam String password,
+            @RequestParam String name, @RequestParam String mobile, @RequestParam String liveAddress, HttpServletRequest request) {
         if (StringUtils.isBlank(username)
                 || StringUtils.isBlank(password)) return JsonResult.buildResp(ResultCode.ACCOUNT_PWD_ERROR);
         password = MD5Utils.encrypt(username, password);
         UserDO user = new UserDO();
         user.setUsername(username);
         user.setPassword(password);
-        user.setStatus(0);
+        user.setStatus(1);
         user.setType(2);
         user.setName(name);
         user.setMobile(mobile);
@@ -64,7 +69,9 @@ public class BusinessLoginController extends BaseController{
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            return JsonResult.buildResp(new LoginVo(username, password, null));
+            HttpSession session=request.getSession();//获取session并将userName存入session对象
+            session.setAttribute("userName", user.getUsername());
+            return JsonResult.buildResp(new LoginVo(username, password, ""));
         } catch (AuthenticationException e) {
             e.printStackTrace();
         }
