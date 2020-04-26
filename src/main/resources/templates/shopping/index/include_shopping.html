@@ -6,97 +6,132 @@
 <meta name="author" content="">
 <title>极宅</title>
 <link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/blog/clean-blog.css" rel="stylesheet">
-<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-	@media (max-width:768px){
-		.side{ display:none;  }
-		}
-	@media (min-width:768px){
-		.side{ display:block;  }
-		}
-	.side{
-		position: fixed;
-	    width: 50px;
-	    right: 5%;
-	    bottom: 15%;
-	    z-index: 100;
+	body{
+		background: #F4F4F4;
+		font-family: Arial, sans-serif;
+		font-size: 14px;
+		font-weight: lighter;
 	}
-	.side ul{
-		list-style:none;
+	.l-main{
+		width: 100%;
+		margin: 0 auto;
 	}
-	.side ul li {
-	    width: 35px;
-	    height: 35px;
-	    float: left;
-	    position: relative;
-	    margin-top: 9px;
+	.menu{
+		width: 100%;
+		background: #fff;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+		border-radius: 5px;
+		float: left;
 	}
-	.side ul li .qqbdimg {
-	    padding: 7px;
-	    margin-top: 5px;
-	    margin-bottom: 1px;
-	    /* margin-left: 22px; */
-	    position: absolute;
-	    width: 53px;
-	    height: 54px;
-	    /* margin-left: 9px; */
-	    bottom: 0;
-	    right: -7px;
-	    transition: all 0.3s;
-	    background: #fff;
-	    opacity: 0;
-	    filter: Alpha(opacity=80);
-	    color: #fff;
-	    font: 14px/54px "微软雅黑";
-	    overflow: hidden;
+	.menu__body{
+		border-radius: 0 0 5px 5px;
 	}
-	.side ul li .qqbdimg:hover{
-		overflow:hidden;
-		padding: 7px;
-	    margin-top: 5px;
-	    width:124px;
-	    height:124px;
-	    opacity:1;
-	    z-index:100;
-	    right:0;
-	    background:rgb(142, 142, 142);
+	.menu--small{
+		width: 110px;
 	}
-	.side ul li img {
-	    width: 100%;
-	    height: 100%;
+	.nav{
+		list-style: none;
 	}
-	.side ul li .sidetop {
-	    height: 100%;
-	    display: block;
-	    background: #2f4050;
-	    padding: 2px 0px;
-	    text-align: center;
-	    color: #fff;
-	    border-radius: 50%;
-	    opacity: .5;
+	.nav__item{
+		width: 200px;
+		margin: 20px;
+		float: left;
 	}
+	.nav__item-link{
+		padding: 10px 15px;
+		text-decoration: none;
+		color: #8B8E93;
+		display: block;
+		border-bottom: 1px solid #F0F0F0;
+	}
+    .nav__item-link:hover{
+        background: #f0f0f0;
+    }
+    .nav__item-link.is-active {
+        background: #6E757F;
+        color: #fff;
+        border-bottom-color: #4B4F55;
+        box-shadow: 0 1px 0 #7A828D inset;
+    }
+    .nav__item-link.is-active:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        rightright: -6px;
+        margin-top: -6px;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-left: 6px solid #6E757F;
+    }
+    .nav__item-link.is-active .nav__item-icon {
+        color: #fff;
+    }
+    .nav__item:last-child .nav__item-link {
+        border-bottom: none;
+    }
+    .nav__item-icon {
+        color: #D2D5DA;
+        width: 20px;
+        text-align: center;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+    .badge{
+        font-size: 12px;
+        padding: 2px 8px;
+        border: 1px solid #D1D1D1;
+        border-radius: 10px;
+        position: absolute;
+        top: 10px;
+        rightright: 15px;
+    }
+    .badge--warning {
+        background: #ED373F;
+        border-color: #ED373F;
+    }
 </style>
 </head>
 <nav th:fragment="nav">
-	<div class="container">
-		<div class="navbar-header page-scroll">
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-		</div>
-		<div style="background: black;" class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="/">美食广场</a></li>
-				<li><a href="/sys/cert">我的背包</a></li>
-				<li th:if="${session.userName}"><a href="#" th:text="${session.userName}"></a></li>
-				<li th:unless="${session.userName}"><a href="/business/businessLogin">登录</a></li>
-				<li th:unless="${session.userName}"><a href="/business/businessRegister">注册</a></li>
-			</ul>
+	<!--<div class="container">-->
+		<!--<div style="background: black;" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+			<!--<ul class="nav navbar-nav navbar-right">-->
+				<!--<li><a href="/">美食广场</a></li>-->
+				<!--<li><a href="/sys/cert">我的背包</a></li>-->
+				<!--<li><a href="/sys/order/finish">已完成订单</a></li>-->
+				<!--<li th:if="${session.userName}"><a href="#" th:text="${session.userName}"></a></li>-->
+				<!--<li th:unless="${session.userName}"><a href="/business/businessLogin">登录</a></li>-->
+				<!--<li th:unless="${session.userName}"><a href="/business/businessRegister">注册</a></li>-->
+			<!--</ul>-->
+		<!--</div>-->
+	<!--</div>-->
+	<div class="l-main">
+		<div class="menu">
+			<div class="menu__body">
+				<ul class="nav">
+					<li class="nav__item"><a href="/" class="nav__item-link is-active">
+						<i class="fa fa-envelope nav__item-icon"></i><span class="nav__item-text">美食广场</span> </a></li>
+					<li class="nav__item"><a href="/sys/cert" class="nav__item-link is-active">
+						<i class="fa fa-envelope nav__item-icon"></i><span class="nav__item-text">背包</span> </a></li>
+					<li class="nav__item"><a href="/sys/order/finish" class="nav__item-link is-active">
+						<i class="fa fa-envelope nav__item-icon"></i><span class="nav__item-text">已完成</span> </a></li>
+
+					<li class="nav__item" th:if="${session.userName}">
+						<a href="#" class="nav__item-link is-active">
+							<i class="fa fa-envelope nav__item-icon"></i>
+							<span class="nav__item-text" th:text="${session.userName}"></span>
+						</a>
+					</li>
+					<li class="nav__item" th:unless="${session.userName}">
+						<a href="/business/businessLogin" class="nav__item-link is-active">
+						<i class="fa fa-envelope nav__item-icon"></i><span class="nav__item-text">登录</span> </a>
+					</li>
+					<li class="nav__item" th:unless="${session.userName}">
+						<a href="/business/businessRegister" class="nav__item-link is-active">
+						<i class="fa fa-envelope nav__item-icon"></i><span class="nav__item-text">注册</span> </a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </nav>
@@ -105,10 +140,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<p class="copyright text-muted">Copyright &copy; 何碧
-						2019</p>
-					<p class="copyright text-muted">京ICP备00000001号</p>
-
+					<p class="copyright text-muted">Copyright &copy; 何碧 2019 京ICP备00000001号</p>
 				</div>
 			</div>
 		</div>

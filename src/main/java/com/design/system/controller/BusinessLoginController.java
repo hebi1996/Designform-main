@@ -25,6 +25,8 @@ import java.io.IOException;
 @RequestMapping("/business")
 @Controller
 public class BusinessLoginController extends BaseController{
+    @Autowired UserService userService;
+
     @GetMapping("/businessLogin")
     public String businessLogin(){ return "business_login";}
 
@@ -34,8 +36,11 @@ public class BusinessLoginController extends BaseController{
     @PostMapping("/login")
     @ResponseBody
     public JsonResult login(HttpServletRequest request,@RequestParam String redirectUrl, @RequestParam String username, @RequestParam String password) {
-        if (StringUtils.isBlank(username)
-                || StringUtils.isBlank(password)) return JsonResult.buildResp(ResultCode.ACCOUNT_PWD_ERROR);
+        JsonResult result = new JsonResult();
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+            result.setCode(-1);
+            result.setMessage("账号或者密码不能为空");
+        }
         password = MD5Utils.encrypt(username, password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
@@ -45,12 +50,11 @@ public class BusinessLoginController extends BaseController{
             session.setAttribute("userName", username);
             return JsonResult.buildResp(new LoginVo(username, password, StringUtils.isBlank(redirectUrl) ? "/" : redirectUrl));
         } catch (AuthenticationException e) {
-            e.printStackTrace();
+            result.setCode(-1);
+            result.setMessage("账号或者密码错误");
         }
-        return JsonResult.error();
+        return result;
     }
-    @Autowired
-    UserService userService;
     @PostMapping("/register")
     @ResponseBody
     public JsonResult register(
@@ -77,8 +81,8 @@ public class BusinessLoginController extends BaseController{
             return JsonResult.buildResp(new LoginVo(username, password, ""));
         } catch (AuthenticationException e) {
             e.printStackTrace();
+            return JsonResult.buildResp("注册失败");
         }
-        return JsonResult.error();
     }
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

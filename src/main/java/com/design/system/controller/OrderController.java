@@ -6,8 +6,10 @@ import com.design.common.utils.Query;
 import com.design.common.utils.R;
 import com.design.system.domain.GoodsDO;
 import com.design.system.domain.OrderDO;
+import com.design.system.domain.ShopingCertDO;
 import com.design.system.service.GoodsService;
 import com.design.system.service.OrderService;
+import com.design.system.vo.OrderVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RequestMapping("/sys/order")
 @Controller
@@ -43,6 +44,7 @@ public class OrderController extends BaseController {
         PageUtils pageUtil = new PageUtils(sysOrderList, total);
         return pageUtil;
     }
+
     @RequiresPermissions("sys:order:edit")
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable("id") Long id) {
@@ -80,5 +82,26 @@ public class OrderController extends BaseController {
             return R.ok();
         }
         return R.error();
+    }
+
+    @GetMapping("/finish")
+    public String user(HttpServletRequest request,Model model) {
+        if (null == getUser()) {
+            model.addAttribute("redirect_url",request.getServletPath());
+            return "business_login";
+        }
+        List<OrderVO> vos = new ArrayList();
+        Map<String,Object> params = new HashMap<>();
+        List<OrderDO> list = orderService.list(params);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        for (OrderDO orderDO : list) {
+            OrderVO vo = new OrderVO();
+            orderDO.setPrice(orderDO.getPrice());
+            vo.setPayType(Objects.equals(1, orderDO.getPayType()) ? "到付" : "微信");
+            vo.setPayTime(sdf.format(orderDO.getPayTime()));
+            vos.add(vo);
+        }
+        model.addAttribute("list", vos);
+        return prefix + "/finish";
     }
 }

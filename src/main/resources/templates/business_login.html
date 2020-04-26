@@ -29,26 +29,33 @@
         <form id="signupForm">
             <h3 class="text-center">登录</h3>
             <input type="hidden" name="redirectUrl" class="form-control uname" th:value="${redirect_url}"/>
-            <input type="text" name="username" class="form-control uname" placeholder="请输入账号"/>
-            <input type="password" name="password" class="form-control pword m-b" placeholder="请输入密码"/>
-            <a id="login" class="btn btn-login btn-block">去登录</a>
+            <input type="text" name="username" placeholder="请输入账号"
+                   style="outline-style: none ;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 13px 14px;
+    width: 520px;
+    font-size: 14px;
+    font-weight: 700;margin-top:20px;"/>
+            <input type="password" name="password" placeholder="请输入密码"
+                   style="outline-style: none ;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 13px 14px;
+    width: 520px;
+    font-size: 14px;
+    font-weight: 700;margin-top:20px;"/>
+            <a id="login" class="btn btn-login btn-block">登录</a>
         </form>
     </div>
-    <div class="signup-footer" style="position:absolute;bottom:0;">
-        <div class="pull-left">&copy; 2019 何碧
-        </div>
-    </div>
+    <div class="signup-footer" style="position:absolute;bottom:0;"><div class="pull-left">&copy; 2019 何碧</div></div>
 </div>
 <script th:inline="javascript"> var ctx = [[@{
     /}]] ; </script>
-<!-- 全局js -->
 <script src="/js/jquery.min.js?v=2.1.4" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6" th:src="@{/js/bootstrap.min.js?v=3.3.6}"></script>
 
-<!-- 自定义js -->
 <script src="/js/content.js?v=1.0.0" th:src="@{/js/content.js?v=1.0.0}"></script>
-
-<!-- jQuery Validation plugin javascript-->
 <script src="/js/ajax-util.js"></script>
 <script src="/js/plugins/validate/jquery.validate.min.js"
         th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>

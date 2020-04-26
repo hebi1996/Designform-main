@@ -33,12 +33,9 @@ import java.util.List;
 @Controller
 public class LoginController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    @Autowired
-    MenuService menuService;
-    @Autowired
-    FileService fileService;
-    @Autowired
-    BootdoConfig bootdoConfig;
+    @Autowired MenuService menuService;
+    @Autowired FileService fileService;
+    @Autowired BootdoConfig bootdoConfig;
     @GetMapping({"/", ""})
     public String welcome(Model model) {
         return "redirect:/shopping";

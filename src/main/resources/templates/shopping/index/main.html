@@ -10,7 +10,8 @@
 <head th:include="shopping/index/include_shopping::header"></head>
 <body>
 	<nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
-	<div class="container" id="container">
+	<div class="container" id="container" style="margin-top: 100px;">
+
 	</div>
 	</body>
 	<div th:include="shopping/index/include_shopping::footer"></div>
@@ -25,8 +26,7 @@
 			bindList(currentPage * limit)
 		}
 		function bindList(offset) {
-			$
-				.ajax({
+			$.ajax({
 					url : 'shopping/open/list?type=1&limit=10&offset=' + offset,
 					method : 'get',
 					dataType : 'json',

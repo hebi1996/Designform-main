@@ -3,16 +3,22 @@
 <head th:include="shopping/index/include_shopping::header"></head>
 <body>
 <nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
-<table border="1" style="width: 100%;">
-    <tr  th:each="cert : ${list}">
-        <td><img th:src="${cert.imageUrl}" width="200" height="200" /></td>
-        <td th:text="${cert.goodsName}">id</td>
-        <td th:text="${cert.number}">id</td>
-        <td th:text="${cert.price}">id</td>
-    </tr>
-</table>
-<h1><p th:text ="${loginUser.liveAddress}"></p></h1>
-<button type="button" class="btn">支付</button>
+<div style="margin-top: 100px;">
+    <table border="1" style="width: 100%;">
+        <tr  th:each="cert : ${list}">
+            <td><img th:src="${cert.imageUrl}" width="200" height="200" /></td>
+            <td th:text="${cert.goodsName}">id</td>
+            <td th:text="${cert.number}">id</td>
+            <td th:text="${cert.price}">id</td>
+        </tr>
+    </table>
+    <h1>配送地址:<p th:text ="${loginUser.liveAddress}"></p><a href="">更换地址</a></h1>
+    <h1>总金额:<p th:text ="${totalAmout}"></p>
+    </h1>
+    <input type="radio" name="payType" value="到付" /> 到付
+    <input type="radio" name="payType" value="微信" /> 微信 <input type="radio" name="payType" value="支付宝" /> 支付宝
+    <button type="button" class="btn">支付</button>
+</div>
 </body>
 </html>
 <script type="text/javascript">
@@ -31,7 +37,13 @@
 							type: "POST",
 							url: "cert/pay",
 							dataType: "JSON",
-							success: function(result) {alert(result.msg)}
+							success: function(result) {
+                                if(result.code == 0) {
+                                    parent.location.href = 'http://localhost:1234/sys/order/finish';
+                                } else {
+                                    alert(result.msg);
+                                }
+							}
 						  });
 					}
 				}

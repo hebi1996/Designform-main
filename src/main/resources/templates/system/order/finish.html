@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head th:include="shopping/index/include_shopping::header"></head>
+<body>
+<nav th:include="shopping/index/include_shopping::nav"  class="navbar navbar-default navbar-custom navbar-fixed-top" ></nav>
+<table border="1" style="width: 100%; margin-top: 100px;">
+    <tr  th:each="order : ${list}">
+        <td th:text="${order.price}"></td>
+        <td th:text="${order.payTime}">price</td>
+        <td th:text="${order.payType}">price</td>
+    </tr>
+</table>
+</body>
+</html>
